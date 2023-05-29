@@ -4,11 +4,11 @@ const {
   listContacts,
   getContactById,
   // removeContact,
-  // addContact,
+  addContact,
   // updateContact,
 } = require("../../models/contacts");
 
-const {HttpError} = require("../../helpers");
+const { HttpError } = require("../../helpers");
 
 const router = express.Router();
 
@@ -37,7 +37,17 @@ router.get("/:contactId", async (req, res, next) => {
 });
 
 router.post("/", async (req, res, next) => {
-  res.json({ message: "template message" });
+  // console.log(req.body);
+  try {
+    // const {error} = addSchema.validate(req.body);
+    //     if(error) {
+    //         throw HttpError(400, "Missing required name field);
+    //     }
+    const result = await addContact(req.body);
+    res.status(201).json(result);
+  } catch (error) {
+    next(error);
+  }
 });
 
 router.delete("/:contactId", async (req, res, next) => {
