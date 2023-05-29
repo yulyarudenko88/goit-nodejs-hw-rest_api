@@ -8,6 +8,8 @@ const {
   // updateContact,
 } = require("../../models/contacts");
 
+const {HttpError} = require("../../helpers");
+
 const router = express.Router();
 
 router.get("/", async (req, res, next) => {
@@ -25,9 +27,9 @@ router.get("/:contactId", async (req, res, next) => {
 
     const result = await getContactById(id);
     if (!result) {
-      // throw HttpError(404, "Not found");
+      throw HttpError(404, "Not found");
     }
-    
+
     res.json(result);
   } catch (error) {
     next(error);
