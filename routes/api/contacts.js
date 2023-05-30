@@ -6,7 +6,7 @@ const {
   getContactById,
   removeContact,
   addContact,
-  // updateContact,
+  updateContact,
 } = require("../../models/contacts");
 
 const { HttpError } = require("../../helpers");
@@ -71,7 +71,22 @@ router.delete("/:contactId", async (req, res, next) => {
 });
 
 router.put("/:contactId", async (req, res, next) => {
-  res.json({ message: "template message" });
+  try { 
+    const { error } = schema.validate(req.body);
+    if (error) {
+      throw HttpError(400, "missing fields");
+    }
+
+    const { contactId } = req.params;
+    const result = await updateContact(contactId, req.body);
+    if (!result) {
+      throw HttpError(404, "Not found");
+    }
+    
+    res.json(result);
+  } catch (error) {
+    next(error);
+  }
 });
 
 module.exports = router;
