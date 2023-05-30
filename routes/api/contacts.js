@@ -1,4 +1,5 @@
 const express = require("express");
+const Joi = require("joi");
 
 const {
   listContacts,
@@ -11,6 +12,12 @@ const {
 const { HttpError } = require("../../helpers");
 
 const router = express.Router();
+
+const schema = Joi.object({
+  name: Joi.string().required(),
+  email: Joi.string().required(),
+  phone: Joi.string().required(),
+});
 
 router.get("/", async (req, res, next) => {
   try {
@@ -39,10 +46,11 @@ router.get("/:contactId", async (req, res, next) => {
 router.post("/", async (req, res, next) => {
   // console.log(req.body);
   try {
-    // const {error} = addSchema.validate(req.body);
-    //     if(error) {
-    //         throw HttpError(400, "Missing required name field);
-    //     }
+    const { error } = schema.validate(req.body);
+    if (error) {
+      throw HttpError(400, "Missing required name field");
+    }
+
     const result = await addContact(req.body);
     res.status(201).json(result);
   } catch (error) {
