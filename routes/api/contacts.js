@@ -4,7 +4,7 @@ const Joi = require("joi");
 const {
   listContacts,
   getContactById,
-  // removeContact,
+  removeContact,
   addContact,
   // updateContact,
 } = require("../../models/contacts");
@@ -30,9 +30,8 @@ router.get("/", async (req, res, next) => {
 
 router.get("/:contactId", async (req, res, next) => {
   try {
-    const { id } = req.params;
-
-    const result = await getContactById(id);
+    const { contactId } = req.params;
+    const result = await getContactById(contactId);
     if (!result) {
       throw HttpError(404, "Not found");
     }
@@ -44,14 +43,13 @@ router.get("/:contactId", async (req, res, next) => {
 });
 
 router.post("/", async (req, res, next) => {
-  // console.log(req.body);
   try {
     const { error } = schema.validate(req.body);
     if (error) {
-      throw HttpError(400, "Missing required name field");
+      throw HttpError(400, "missing required name field");
     }
-
     const result = await addContact(req.body);
+
     res.status(201).json(result);
   } catch (error) {
     next(error);
@@ -59,7 +57,17 @@ router.post("/", async (req, res, next) => {
 });
 
 router.delete("/:contactId", async (req, res, next) => {
-  res.json({ message: "template message" });
+  try {
+    const { contactId } = req.params;
+    const result = await removeContact(contactId);
+    if (!result) {
+      throw HttpError(404, "Not found");
+    }
+    
+    res.status(200).json({ message: "contact deleted" });
+  } catch (error) {
+    next(error);
+  }
 });
 
 router.put("/:contactId", async (req, res, next) => {
