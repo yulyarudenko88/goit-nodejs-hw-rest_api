@@ -4,7 +4,7 @@ const {
   removeContact,
   addContact,
   updateContact,
-} = require("../../models/contacts");
+} = require("../models/contacts");
 const Joi = require("joi");
 
 const schema = Joi.object({
@@ -13,7 +13,7 @@ const schema = Joi.object({
   phone: Joi.string().required(),
 });
 const { ctrlWrapper } = require("../helpers");
-const { HttpError } = require("../../helpers");
+const { HttpError } = require("../helpers");
 
 const getListContacts = async (_, res) => {
   const result = await listContacts();
