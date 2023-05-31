@@ -1,5 +1,3 @@
-const Joi = require("joi");
-
 const {
   listContacts,
   getContactById,
@@ -7,15 +5,15 @@ const {
   addContact,
   updateContact,
 } = require("../../models/contacts");
-
-const { ctrlWrapper } = require("../helpers");
-const { HttpError } = require("../../helpers");
+const Joi = require("joi");
 
 const schema = Joi.object({
   name: Joi.string().required(),
   email: Joi.string().required(),
   phone: Joi.string().required(),
 });
+const { ctrlWrapper } = require("../helpers");
+const { HttpError } = require("../../helpers");
 
 const getListContacts = async (_, res) => {
   const result = await listContacts();
