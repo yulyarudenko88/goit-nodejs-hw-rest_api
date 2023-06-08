@@ -32,20 +32,20 @@ const addNewContact = async (req, res) => {
 //   res.status(200).json({ message: "contact deleted" });
 // };
 
-// const updateContactData = async (req, res) => {
-//   const { contactId } = req.params;
-//   const result = await updateContact(contactId, req.body);
-//   if (!result) {
-//     throw HttpError(404, "Not found");
-//   }
+const updateContactData = async (req, res) => {
+  const { contactId } = req.params;
+  const result = await Contact.findByIdAndUpdate(contactId, req.body, );
+  if (!result) {
+    throw HttpError(404, "Not found");
+  }
 
-//   res.json(result);
-// };
+  res.json(result);
+};
 
 module.exports = {
   getListContacts: ctrlWrapper(getListContacts),
   getByContactId: ctrlWrapper(getByContactId),
   addNewContact: ctrlWrapper(addNewContact),
   // deleteContact: ctrlWrapper(deleteContact),
-  // updateContactData: ctrlWrapper(updateContactData),
+  updateContactData: ctrlWrapper(updateContactData),
 };

@@ -15,6 +15,8 @@ router.post("/", validateBody(contactsSchemaJoi), ctrl.addNewContact);
 
 // router.delete("/:contactId", ctrl.deleteContact);
 
-// router.put("/:contactId", isValidId, validateBody(contactsSchemaJoi), ctrl.updateContactData);
+router.put("/:contactId", isValidId, validateBody(contactsSchemaJoi), ctrl.updateContactData);
+
+router.puch("/:contactId/favorite", isValidId, validateBody(contactsSchemaJoi), ctrl.updateContactData);
 
 module.exports = router;
