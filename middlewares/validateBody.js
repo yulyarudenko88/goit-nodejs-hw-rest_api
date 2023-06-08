@@ -3,10 +3,11 @@ const { HttpError } = require("../helpers");
 const validateBody = (schema) =>
   function validation(req, res, next) {
     const { error } = schema.validate(req.body);
+    console.log(error)
     if (error) {
       const missingField = error.details[0].path;
       const errorMessage =
-        Object.keys(req.body).length === 2
+        Object.keys(req.body).length === 3
           ? `missing required ${missingField[0]} field`
           : "missing fields";
 
