@@ -6,7 +6,7 @@ const { validateBody, isValidId } = require("../../middlewares");
 const {
   contactsSchemaJoi,
   contactsUpdateFavoriteSchema,
-} = require("../../schemas");
+} = require("../../schemas/contacts");
 
 const ctrl = require("../../controllers/contacts");
 
