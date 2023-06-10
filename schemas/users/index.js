@@ -1,3 +1,3 @@
-const usersMongoose = require("./usersMongoose");
+const usersSchemaMongoose = require("./usersMongoose");
 
-module.exports = { usersMongoose, };
+module.exports = { usersSchemaMongoose, };
