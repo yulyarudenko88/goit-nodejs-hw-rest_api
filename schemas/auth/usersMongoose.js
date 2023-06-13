@@ -1,6 +1,6 @@
 const { Schema } = require("mongoose");
 
-const { emailRegexp } = require("../../constants/auth");
+const { emailRegexp, subscriptionList } = require("../../constants/auth");
 const schema = new Schema(
   {
     password: {
@@ -16,7 +16,7 @@ const schema = new Schema(
     },
     subscription: {
       type: String,
-      enum: ["starter", "pro", "business"],
+      enum: subscriptionList,
       default: "starter",
     },
     token: String,
