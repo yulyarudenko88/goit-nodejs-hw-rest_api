@@ -1,4 +1,5 @@
 const usersSchemaMongoose = require("./usersMongoose");
-const userRegister= require("./userRegister");
+const userRegister = require("./userRegister");
+const userLogin = require("./userLogin");
 
-module.exports = { usersSchemaMongoose, userRegister };
+module.exports = { usersSchemaMongoose, userRegister, userLogin };
