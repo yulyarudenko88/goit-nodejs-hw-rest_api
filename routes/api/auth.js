@@ -6,7 +6,7 @@ const { userRegister } = require("../../schemas/auth");
 const ctrl = require("../../controllers/auth");
 
 const router = express.Router();
-console.log(ctrl)
+// console.log(ctrl)
 router.post('/register', validateBody(userRegister), ctrl.register)
 
 module.exports = router;
