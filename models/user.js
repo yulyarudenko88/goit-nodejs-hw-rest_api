@@ -1,7 +1,7 @@
 const { model } = require("mongoose");
 
 const { usersSchemaMongoose } = require("../schemas/auth");
-const { handleMongooseError } = require("../middlewares");
+const { handleMongooseError } = require("../helpers");
 
 usersSchemaMongoose.post("save", handleMongooseError);
 
