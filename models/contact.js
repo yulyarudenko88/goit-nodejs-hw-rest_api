@@ -1,7 +1,7 @@
 const { model } = require("mongoose");
 
-const { contactsSchemaMongoose } = require("../schemas");
-const { handleMongooseError } = require("../middlewares");
+const { contactsSchemaMongoose } = require("../schemas/contacts");
+const { handleMongooseError } = require("../helpers");
 
 contactsSchemaMongoose.post("save", handleMongooseError);
 
