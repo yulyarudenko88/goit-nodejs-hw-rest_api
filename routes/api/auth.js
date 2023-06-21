@@ -1,6 +1,6 @@
 const express = require("express");
 
-const { validateBody, authenticate } = require("../../middlewares");
+const { validateBody, authenticate, upload } = require("../../middlewares");
 const {
   userRegister,
   userLogin,
@@ -11,7 +11,7 @@ const ctrl = require("../../controllers/auth");
 
 const router = express.Router();
 
-router.post("/register", validateBody(userRegister), ctrl.register);
+router.post("/register", upload.single('avatarURL'), validateBody(userRegister), ctrl.register);
 
 router.post("/login", validateBody(userLogin), ctrl.login);
 
