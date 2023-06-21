@@ -19,6 +19,7 @@ const schema = new Schema(
       enum: subscriptionList,
       default: "starter",
     },
+    avatarURL: String,
     token: String,
   },
   { versionKey: false, timestamps: true }
