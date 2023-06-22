@@ -11,7 +11,7 @@ const ctrl = require("../../controllers/auth");
 
 const router = express.Router();
 
-router.post("/register", upload.single('avatarURL'), validateBody(userRegister), ctrl.register);
+router.post("/register", validateBody(userRegister), ctrl.register);
 
 router.post("/login", validateBody(userLogin), ctrl.login);
 
@@ -25,5 +25,7 @@ router.patch(
   validateBody(userUpdateSubscription),
   ctrl.updateSubscription
 );
+
+router.patch("/avatars", authenticate, upload.single('avatar'), ctrl.updateAvatar);
 
 module.exports = router;
