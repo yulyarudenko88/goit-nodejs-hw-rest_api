@@ -3,7 +3,7 @@ const path = require("path");
 
 const { User } = require("../../models");
 
-const { HttpError, ctrlWrapper } = require("../../helpers");
+const { HttpError, ctrlWrapper, resizeAvatar } = require("../../helpers");
 
 const avatarsDir = path.resolve("public", "avatars");
 
@@ -12,6 +12,8 @@ const updateAvatar = async (req, res, next) => {
 
   if (!req.file) throw HttpError(401, "Not authorized");
   const { path: oldPath, filename } = req.file;
+  
+  await resizeAvatar(oldPath)
 
   const newPath = path.join(avatarsDir, filename);
   await fs.rename(oldPath, newPath);
