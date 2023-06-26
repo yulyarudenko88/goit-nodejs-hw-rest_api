@@ -1,10 +1,11 @@
-require("dotenv").config();
-
-const { BASE_URL } = process.env;
-
 const { User } = require("../../models");
 
-const { ctrlWrapper, HttpError, sendEmail } = require("../../helpers");
+const {
+  ctrlWrapper,
+  HttpError,
+  createVerificationEmail,
+  sendEmail,
+} = require("../../helpers");
 
 const resendVerifyEmail = async (req, res) => {
   const { email } = req.body;
@@ -14,12 +15,7 @@ const resendVerifyEmail = async (req, res) => {
 
   if (user.verify) throw HttpError(400, "Verification has already been passed");
 
-  const verifyEmail = {
-    to: email,
-    subject: "Verify your email",
-    html: `<a href="${BASE_URL}/api/users/verify/${user.verificationToken}" target="_blanc" rel="noreferrer noopener">Click to verify email</a>`,
-  };
-
+  const verifyEmail = createVerificationEmail(email, user.verificationToken);
   await sendEmail(verifyEmail);
 
   res.status(200).json({

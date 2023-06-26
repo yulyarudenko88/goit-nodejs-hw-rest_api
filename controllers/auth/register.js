@@ -1,13 +1,15 @@
-require("dotenv").config();
 const bcrypt = require("bcryptjs");
 const gravatar = require("gravatar");
-const {nanoid} = require("nanoid");
-
-const { BASE_URL } = process.env;
+const { nanoid } = require("nanoid");
 
 const { User } = require("../../models");
 
-const { ctrlWrapper, HttpError, sendEmail } = require("../../helpers");
+const {
+  ctrlWrapper,
+  HttpError,
+  createVerificationEmail,
+  sendEmail,
+} = require("../../helpers");
 
 const register = async (req, res) => {
   const { email, password } = req.body;
@@ -16,9 +18,9 @@ const register = async (req, res) => {
   if (user) throw HttpError(409, "Email in use");
 
   const hashPassword = await bcrypt.hash(password, 10);
-  const avatarURL = await gravatar.url(email, { protocol: "http", s: "250" }); 
+  const avatarURL = await gravatar.url(email, { protocol: "http", s: "250" });
   const verificationToken = nanoid();
- 
+
   const newUser = await User.create({
     ...req.body,
     password: hashPassword,
@@ -26,12 +28,7 @@ const register = async (req, res) => {
     verificationToken,
   });
 
-  const verifyEmail = {
-    to: email,
-    subject: "Verify your email",
-    html: `<a href="${BASE_URL}/api/users/verify/${verificationToken}" target="_blanc" rel="noreferrer noopener">Click to verify email</a>`,
-  };
-
+  const verifyEmail = createVerificationEmail(email, verificationToken);
   await sendEmail(verifyEmail);
 
   res.status(201).json({
