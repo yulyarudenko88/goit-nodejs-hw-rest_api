@@ -5,6 +5,7 @@ const {
   userRegister,
   userLogin,
   userUpdateSubscription,
+  userVerifyEmail,
 } = require("../../schemas/auth");
 
 const ctrl = require("../../controllers/auth");
@@ -14,6 +15,8 @@ const router = express.Router();
 router.post("/register", validateBody(userRegister), ctrl.register);
 
 router.get("/verify/:verificationToken", ctrl.verifyEmail);
+
+router.post("/verify", validateBody(userVerifyEmail), ctrl.resendVerifyEmail);
 
 router.post("/login", validateBody(userLogin), ctrl.login);
 
