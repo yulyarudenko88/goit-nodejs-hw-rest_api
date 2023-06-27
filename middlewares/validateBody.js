@@ -11,10 +11,10 @@ const validateBody = (schema) =>
       if (Object.keys(req.body).length === 3)
         errorMessage = `missing required ${missingField[0]} field`;
       else if (
-        missingField[0] === "favorite" &&
+        missingField[0] === "favorite" || missingField[0] === "email" &&
         Object.keys(req.body).length === 0
       ) {
-        errorMessage = `missing field ${missingField[0]}`;
+        errorMessage = `missing required field ${missingField[0]}`;
       }
 
       next(HttpError(400, errorMessage));

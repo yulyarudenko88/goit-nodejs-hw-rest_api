@@ -5,6 +5,7 @@ const {
   userRegister,
   userLogin,
   userUpdateSubscription,
+  userVerifyEmail,
 } = require("../../schemas/auth");
 
 const ctrl = require("../../controllers/auth");
@@ -12,6 +13,10 @@ const ctrl = require("../../controllers/auth");
 const router = express.Router();
 
 router.post("/register", validateBody(userRegister), ctrl.register);
+
+router.get("/verify/:verificationToken", ctrl.verifyEmail);
+
+router.post("/verify", validateBody(userVerifyEmail), ctrl.resendVerifyEmail);
 
 router.post("/login", validateBody(userLogin), ctrl.login);
 
@@ -26,6 +31,11 @@ router.patch(
   ctrl.updateSubscription
 );
 
-router.patch("/avatars", authenticate, upload.single('avatar'), ctrl.updateAvatar);
+router.patch(
+  "/avatars",
+  authenticate,
+  upload.single("avatar"),
+  ctrl.updateAvatar
+);
 
 module.exports = router;
