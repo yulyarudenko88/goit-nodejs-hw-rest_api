@@ -4,12 +4,9 @@ const { nanoid } = require("nanoid");
 
 const { User } = require("../../models");
 
-const {
-  ctrlWrapper,
-  HttpError,
-  createVerificationEmail,
-  sendEmail,
-} = require("../../helpers");
+const { ctrlWrapper, HttpError } = require("../../helpers");
+
+const { createVerificationEmail, sendEmail } = require("../../services/email");
 
 const register = async (req, res) => {
   const { email, password } = req.body;

@@ -1,11 +1,8 @@
 const { User } = require("../../models");
 
-const {
-  ctrlWrapper,
-  HttpError,
-  createVerificationEmail,
-  sendEmail,
-} = require("../../helpers");
+const { ctrlWrapper, HttpError } = require("../../helpers");
+
+const { createVerificationEmail, sendEmail } = require("../../services/email");
 
 const resendVerifyEmail = async (req, res) => {
   const { email } = req.body;
